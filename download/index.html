@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get SilentMatch</title>
+  <meta name="description" content="Download SilentMatch — connect with people around you, in real life.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0b0b0f;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .logo-ring {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
+      margin-bottom: 24px;
+    }
+    .logo-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: #17171d;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .tagline { font-size: 17px; color: #b8b8c2; margin-bottom: 40px; max-width: 320px; }
+    .btn {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-bottom: 14px;
+    }
+    .btn-primary { background: #fff; color: #0b0b0f; }
+    .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: 600; }
+    .hint { font-size: 13px; color: #6a6a75; margin-top: 8px; max-width: 320px; line-height: 1.5; }
+    .hidden { display: none; }
+    footer { margin-top: 56px; font-size: 12px; color: #4a4a55; }
+    footer a { color: #6a6a75; }
+  </style>
+</head>
+<body>
+  <div class="logo-ring"><div class="logo-inner">👋</div></div>
+  <h1>SilentMatch</h1>
+  <p class="tagline">See who's around you. Wave. Meet in real life.</p>
+
+  <a id="appstore-btn" class="btn btn-primary hidden" href="#">Download on the App&nbsp;Store</a>
+  <a id="testflight-btn" class="btn btn-primary" href="#">Join the Beta on TestFlight</a>
+  <p id="testflight-hint" class="hint">You'll need Apple's free TestFlight app — the link walks you through it. Takes about a minute.</p>
+
+  <footer>&copy; 2026 FiveTwoOh, Inc. · <a href="/privacy.html">Privacy</a></footer>
+
+  <script>
+    // ── EDIT THESE TWO LINES TO CONTROL THE PAGE ─────────────────────────────
+    // Before App Store approval: leave APP_STORE_URL null, set TESTFLIGHT_URL
+    // to the public TestFlight invite link from App Store Connect.
+    // After approval: set APP_STORE_URL. Keep TESTFLIGHT_URL to also show a
+    // beta button, or set it to null to hide TestFlight entirely.
+    var APP_STORE_URL = null;
+    var TESTFLIGHT_URL = "REPLACE_WITH_TESTFLIGHT_PUBLIC_LINK";
+    // ─────────────────────────────────────────────────────────────────────────
+
+    var asBtn = document.getElementById('appstore-btn');
+    var tfBtn = document.getElementById('testflight-btn');
+    var tfHint = document.getElementById('testflight-hint');
+
+    if (APP_STORE_URL) {
+      asBtn.href = APP_STORE_URL;
+      asBtn.classList.remove('hidden');
+      tfBtn.classList.remove('btn-primary');
+      tfBtn.classList.add('btn-secondary');
+    }
+    if (TESTFLIGHT_URL && TESTFLIGHT_URL.indexOf('REPLACE_WITH') !== 0) {
+      tfBtn.href = TESTFLIGHT_URL;
+      if (APP_STORE_URL) tfBtn.textContent = 'Or try the beta on TestFlight';
+    } else {
+      tfBtn.classList.add('hidden');
+      tfHint.textContent = APP_STORE_URL ? '' : 'The beta link is being set up — check back shortly.';
+    }
+  </script>
+</body>
+</html>
