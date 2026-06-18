@@ -57,10 +57,36 @@
     .btn-primary { background: #fff; color: #0b0b0f; }
     .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: 600; }
     .hint { font-size: 13px; color: #6a6a75; margin-top: 8px; max-width: 320px; line-height: 1.5; }
+    .requirement { font-size: 13px; color: #8a8a95; margin-top: 24px; max-width: 320px; line-height: 1.5; }
     .hidden { display: none; }
     footer { margin-top: 56px; font-size: 12px; color: #4a4a55; }
     footer a { color: #6a6a75; }
   </style>
+  <script>
+    // ── EDIT THESE TWO LINES TO CONTROL THE PAGE ─────────────────────────────
+    // Before App Store approval: leave APP_STORE_URL null, set TESTFLIGHT_URL
+    // to the public TestFlight invite link from App Store Connect.
+    // After approval: set APP_STORE_URL. Keep TESTFLIGHT_URL to also show a
+    // beta button, or set it to null to hide TestFlight entirely.
+    var APP_STORE_URL = null;
+    var TESTFLIGHT_URL = "https://testflight.apple.com/join/29x967Cg";
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Inline pre-render redirect: if we're on an iPhone/iPad and an App Store
+    // URL is set, jump straight to it; otherwise jump to TestFlight. This runs
+    // in <head> so the branded page never flashes for the target device.
+    (function () {
+      var ua = navigator.userAgent || "";
+      var isIPhone = /iPhone|iPod/i.test(ua);
+      // iPadOS 13+ reports as Mac; detect via touch points.
+      var isIPad = /iPad/i.test(ua) ||
+                   (/Macintosh/i.test(ua) && typeof navigator.maxTouchPoints === "number" && navigator.maxTouchPoints > 1);
+      var dest = APP_STORE_URL || TESTFLIGHT_URL;
+      if ((isIPhone || isIPad) && dest && dest.indexOf("REPLACE_WITH") !== 0) {
+        window.location.replace(dest);
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="logo-ring"><div class="logo-inner">👋</div></div>
@@ -70,19 +96,11 @@
   <a id="appstore-btn" class="btn btn-primary hidden" href="#">Download on the App&nbsp;Store</a>
   <a id="testflight-btn" class="btn btn-primary" href="#">Join the Beta on TestFlight</a>
   <p id="testflight-hint" class="hint">You'll need Apple's free TestFlight app — the link walks you through it. Takes about a minute.</p>
+  <p class="requirement">Requires an iPhone or iPad. Open this page on your device, or scan the QR code.</p>
 
   <footer>&copy; 2026 FiveTwoOh, Inc. · <a href="/privacy.html">Privacy</a></footer>
 
   <script>
-    // ── EDIT THESE TWO LINES TO CONTROL THE PAGE ─────────────────────────────
-    // Before App Store approval: leave APP_STORE_URL null, set TESTFLIGHT_URL
-    // to the public TestFlight invite link from App Store Connect.
-    // After approval: set APP_STORE_URL. Keep TESTFLIGHT_URL to also show a
-    // beta button, or set it to null to hide TestFlight entirely.
-    var APP_STORE_URL = null;
-    var TESTFLIGHT_URL = "REPLACE_WITH_TESTFLIGHT_PUBLIC_LINK";
-    // ─────────────────────────────────────────────────────────────────────────
-
     var asBtn = document.getElementById('appstore-btn');
     var tfBtn = document.getElementById('testflight-btn');
     var tfHint = document.getElementById('testflight-hint');
@@ -98,7 +116,7 @@
       if (APP_STORE_URL) tfBtn.textContent = 'Or try the beta on TestFlight';
     } else {
       tfBtn.classList.add('hidden');
-      tfHint.textContent = APP_STORE_URL ? '' : 'The beta link is being set up — check back shortly.';
+      tfHint.textContent = APP_STORE_URL ? '' : 'Available soon — check back shortly.';
     }
   </script>
 </body>
